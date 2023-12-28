@@ -6,25 +6,15 @@
 
 namespace SNS {
 
+template< uint8_t pinBtnLeft, uint8_t pinBtnRight, uint8_t... pinsMotor >
 class MotorController {
-  inline static constexpr auto stepsPerRevolution = 200;
-  inline static constexpr auto speed              = 240;
+  inline static constexpr int  stepsPerRevolution = 200;
+  inline static constexpr long speed              = 240;
 
   Stepper stepper;
-  uint8_t pinBtnLeft;
-  uint8_t pinBtnRight;
 
 public:
-  MotorController(
-    uint8_t pinBtnLeft,
-    uint8_t pinBtnRight,
-    uint8_t pinMotor1,
-    uint8_t pinMotor2,
-    uint8_t pinMotor3,
-    uint8_t pinMotor4):
-    stepper{ stepsPerRevolution, pinMotor1, pinMotor2, pinMotor3, pinMotor4 },
-    pinBtnLeft{ pinBtnLeft },
-    pinBtnRight{ pinBtnRight } {
+  MotorController(): stepper{ stepsPerRevolution, pinsMotor... } {
     stepper.setSpeed(speed);
   }
 
